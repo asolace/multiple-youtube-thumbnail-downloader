@@ -22,6 +22,34 @@ export const generateThumbnailUrls = (videoId: string) => ({
   default: `https://img.youtube.com/vi/${videoId}/default.jpg`
 });
 
+export const fetchVideoTitle = async (videoId: string): Promise<string> => {
+  try {
+    // Try to get title from YouTube's oEmbed API
+    const oEmbedUrl = `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`;
+    const response = await fetch(oEmbedUrl);
+    
+    if (response.ok) {
+      const data = await response.json();
+      return data.title || `YouTube Video ${videoId}`;
+    }
+  } catch (error) {
+    console.warn('Failed to fetch title from oEmbed:', error);
+  }
+  
+  // Fallback to generic title
+  return `YouTube Video ${videoId}`;
+};
+
+export const sanitizeFilename = (filename: string): string => {
+  // Remove or replace invalid filename characters
+  return filename
+    .replace(/[<>:"/\\|?*]/g, '-')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+    .substring(0, 100); // Limit length
+};
+
 export const downloadImage = async (url: string, filename: string) => {
   try {
     const response = await fetch(url);

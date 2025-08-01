@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { YouTubeVideo } from '../types';
-import { extractVideoId, generateThumbnailUrls, validateImageUrl } from '../utils/youtube';
+import { extractVideoId, generateThumbnailUrls, validateImageUrl, fetchVideoTitle } from '../utils/youtube';
 
 export const useYouTubeVideos = () => {
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
@@ -16,6 +16,7 @@ export const useYouTubeVideos = () => {
         newVideos.push({
           id: Math.random().toString(36).substr(2, 9),
           url: url.trim(),
+          title: 'Invalid URL',
           thumbnails: {
             maxres: '',
             high: '',
@@ -38,6 +39,7 @@ export const useYouTubeVideos = () => {
       newVideos.push({
         id: videoId,
         url: url.trim(),
+        title: 'Loading...',
         thumbnails: generateThumbnailUrls(videoId),
         status: 'loading'
       });
@@ -46,18 +48,22 @@ export const useYouTubeVideos = () => {
     // Add new videos to state
     setVideos(prev => [...prev, ...newVideos]);
 
-    // Validate thumbnails for loading videos
+    // Validate thumbnails and fetch titles for loading videos
     for (const video of newVideos) {
       if (video.status === 'loading') {
         try {
-          // Try to validate the highest quality thumbnail first
-          const isValid = await validateImageUrl(video.thumbnails.maxres);
+          // Fetch title and validate thumbnail in parallel
+          const [title, isValid] = await Promise.all([
+            fetchVideoTitle(video.id),
+            validateImageUrl(video.thumbnails.maxres)
+          ]);
           
           setVideos(prev =>
             prev.map(v =>
               v.id === video.id
                 ? {
                     ...v,
+                    title,
                     status: isValid ? 'success' : 'error',
                     error: isValid ? undefined : 'Thumbnail not available'
                   }
@@ -70,6 +76,7 @@ export const useYouTubeVideos = () => {
               v.id === video.id
                 ? {
                     ...v,
+                    title: `YouTube Video ${video.id}`,
                     status: 'error',
                     error: 'Failed to validate thumbnail'
                   }
