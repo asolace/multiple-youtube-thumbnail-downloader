@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { Youtube, Trash2 } from 'lucide-react';
 import URLInput from './components/URLInput';
 import QualitySelector from './components/QualitySelector';
 import BatchActions from './components/BatchActions';
 import ThumbnailCard from './components/ThumbnailCard';
+import PrivacyPolicy from './components/PrivacyPolicy';
 import { useYouTubeVideos } from './hooks/useYouTubeVideos';
 import { ThumbnailQuality } from './types';
 
@@ -15,7 +17,7 @@ const THUMBNAIL_QUALITIES: ThumbnailQuality[] = [
   { key: 'default', label: 'Default', description: '120x90' }
 ];
 
-function App() {
+const HomePage: React.FC = () => {
   const { videos, addVideos, clearVideos } = useYouTubeVideos();
   const [selectedQuality, setSelectedQuality] = useState<ThumbnailQuality>(THUMBNAIL_QUALITIES[0]);
 
@@ -102,10 +104,29 @@ function App() {
 
         {/* Footer */}
         <footer className="mt-16 text-center text-gray-500 text-sm">
-          <p>Built with React, TypeScript, and Tailwind CSS</p>
+          <div className="space-y-2">
+            <p>Built with React, TypeScript, and Tailwind CSS</p>
+            <div className="flex items-center justify-center gap-4">
+              <a
+                href="/privacy"
+                className="text-blue-600 hover:text-blue-700 transition-colors duration-200"
+              >
+                Privacy Policy
+              </a>
+            </div>
+          </div>
         </footer>
       </div>
     </div>
+  );
+};
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/privacy" element={<PrivacyPolicy />} />
+    </Routes>
   );
 }
 
