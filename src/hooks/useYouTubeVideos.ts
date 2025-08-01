@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { YouTubeVideo } from '../types';
-import { extractVideoId, generateThumbnailUrls, validateImageUrl, fetchVideoTitle, extractPlaylistId, fetchPlaylistVideos, isPlaylistUrl } from '../utils/youtube';
+import { extractVideoId, generateThumbnailUrls, validateImageUrl, fetchVideoTitle } from '../utils/youtube';
 
 export const useYouTubeVideos = () => {
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
@@ -88,33 +88,6 @@ export const useYouTubeVideos = () => {
     }
   }, [videos]);
 
-  const addPlaylist = useCallback(async (playlistUrl: string) => {
-    if (!isPlaylistUrl(playlistUrl)) {
-      throw new Error('Invalid playlist URL');
-    }
-
-    const playlistId = extractPlaylistId(playlistUrl);
-    if (!playlistId) {
-      throw new Error('Could not extract playlist ID');
-    }
-
-    try {
-      const videoIds = await fetchPlaylistVideos(playlistId);
-      
-      if (videoIds.length === 0) {
-        throw new Error('No videos found in playlist');
-      }
-
-      // Convert video IDs to URLs and add them
-      const videoUrls = videoIds.map(id => `https://www.youtube.com/watch?v=${id}`);
-      await addVideos(videoUrls);
-      
-    } catch (error) {
-      console.error('Failed to process playlist:', error);
-      throw error;
-    }
-  }, [addVideos]);
-
   const clearVideos = useCallback(() => {
     setVideos([]);
   }, []);
@@ -126,7 +99,6 @@ export const useYouTubeVideos = () => {
   return {
     videos,
     addVideos,
-    addPlaylist,
     clearVideos,
     removeVideo
   };

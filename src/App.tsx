@@ -16,16 +16,8 @@ const THUMBNAIL_QUALITIES: ThumbnailQuality[] = [
 ];
 
 function App() {
-  const { videos, addVideos, addPlaylist, clearVideos } = useYouTubeVideos();
+  const { videos, addVideos, clearVideos } = useYouTubeVideos();
   const [selectedQuality, setSelectedQuality] = useState<ThumbnailQuality>(THUMBNAIL_QUALITIES[0]);
-
-  const handleAddPlaylist = async (playlistUrl: string) => {
-    try {
-      await addPlaylist(playlistUrl);
-    } catch (error) {
-      alert(`Failed to process playlist: ${error instanceof Error ? error.message : 'Unknown error'}`);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
@@ -46,7 +38,7 @@ function App() {
         </div>
 
         {/* URL Input */}
-        <URLInput onAddUrls={addVideos} onAddPlaylist={handleAddPlaylist} />
+        <URLInput onAddUrls={addVideos} />
 
         {/* Quality Selector & Batch Actions */}
         {videos.length > 0 && (
