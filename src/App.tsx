@@ -38,7 +38,7 @@ const HomePage: React.FC = () => {
           </div>
           <p className="text-gray-600 text-lg">
             Extract and download high-quality thumbnails from YouTube
-            videos in bulk, all at once with ease!
+            videos and playlists in bulk, all at once with ease!
           </p>
 
           <p className="text-gray-600 text-lg">
