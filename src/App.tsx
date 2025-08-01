@@ -8,11 +8,11 @@ import { useYouTubeVideos } from './hooks/useYouTubeVideos';
 import { ThumbnailQuality } from './types';
 
 const THUMBNAIL_QUALITIES: ThumbnailQuality[] = [
-  { key: 'maxres', label: 'Max Res', description: 'Highest quality', resolution: '1280x720' },
-  { key: 'high', label: 'High', description: 'High quality', resolution: '480x360' },
-  { key: 'medium', label: 'Medium', description: 'Medium quality', resolution: '320x180' },
-  { key: 'standard', label: 'Standard', description: 'Standard quality', resolution: '120x90' },
-  { key: 'default', label: 'Default', description: 'Default quality', resolution: '120x90' }
+  { key: 'maxres', label: 'Max Res', description: '1280x720' },
+  { key: 'high', label: 'High', description: '480x360' },
+  { key: 'medium', label: 'Medium', description: '320x180' },
+  { key: 'standard', label: 'Standard', description: '120x90' },
+  { key: 'default', label: 'Default', description: '120x90' }
 ];
 
 function App() {

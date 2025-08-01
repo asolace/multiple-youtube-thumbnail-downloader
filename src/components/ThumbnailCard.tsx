@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Download, ExternalLink, AlertCircle, Loader } from 'lucide-react';
 import { YouTubeVideo, ThumbnailQuality } from '../types';
-import { downloadImage, sanitizeFilename } from '../utils/youtube';
+import { downloadImage } from '../utils/youtube';
 
 interface ThumbnailCardProps {
   video: YouTubeVideo;
@@ -16,8 +16,7 @@ const ThumbnailCard: React.FC<ThumbnailCardProps> = ({ video, selectedQuality })
     setIsDownloading(true);
     try {
       const thumbnailUrl = video.thumbnails[selectedQuality.key];
-      const sanitizedTitle = sanitizeFilename(video.title);
-      const filename = `${sanitizedTitle}_${selectedQuality.resolution}.jpg`;
+      const filename = `${video.id}_${selectedQuality.key}.jpg`;
       await downloadImage(thumbnailUrl, filename);
     } catch (error) {
       console.error('Download failed:', error);
@@ -96,11 +95,6 @@ const ThumbnailCard: React.FC<ThumbnailCardProps> = ({ video, selectedQuality })
       </div>
       
       <div className="p-4">
-        <div className="mb-3">
-          <h3 className="font-semibold text-gray-900 text-sm leading-tight line-clamp-2">
-            {video.title}
-          </h3>
-        </div>
         <div className="flex items-center justify-between">
           <span className="text-sm font-medium text-gray-600">Video ID:</span>
           <code className="text-sm bg-gray-100 px-2 py-1 rounded text-gray-800">
@@ -110,7 +104,7 @@ const ThumbnailCard: React.FC<ThumbnailCardProps> = ({ video, selectedQuality })
         <div className="mt-2 flex items-center justify-between">
           <span className="text-sm font-medium text-gray-600">Quality:</span>
           <span className="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded">
-            {selectedQuality.resolution}
+            {selectedQuality.label}
           </span>
         </div>
       </div>

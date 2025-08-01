@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Download, Loader, Package } from 'lucide-react';
 import { YouTubeVideo, ThumbnailQuality } from '../types';
-import { downloadImage, sanitizeFilename } from '../utils/youtube';
+import { downloadImage } from '../utils/youtube';
 
 interface BatchActionsProps {
   videos: YouTubeVideo[];
@@ -24,8 +24,7 @@ const BatchActions: React.FC<BatchActionsProps> = ({ videos, selectedQuality }) 
       for (let i = 0; i < successfulVideos.length; i++) {
         const video = successfulVideos[i];
         const thumbnailUrl = video.thumbnails[selectedQuality.key];
-        const sanitizedTitle = sanitizeFilename(video.title);
-        const filename = `${sanitizedTitle}_${selectedQuality.resolution}.jpg`;
+        const filename = `${video.id}_${selectedQuality.key}.jpg`;
         
         await downloadImage(thumbnailUrl, filename);
         setDownloadProgress(((i + 1) / successfulVideos.length) * 100);
@@ -70,7 +69,7 @@ const BatchActions: React.FC<BatchActionsProps> = ({ videos, selectedQuality }) 
           ) : (
             <>
               <Download className="w-5 h-5" />
-              Download All ({selectedQuality.resolution})
+              Download All ({selectedQuality.label})
             </>
           )}
         </button>

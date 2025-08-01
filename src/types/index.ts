@@ -1,7 +1,7 @@
 export interface YouTubeVideo {
   id: string;
   url: string;
-  title: string;
+  title?: string;
   thumbnails: {
     maxres: string;
     high: string;
@@ -17,5 +17,4 @@ export interface ThumbnailQuality {
   key: keyof YouTubeVideo['thumbnails'];
   label: string;
   description: string;
-  resolution: string;
 }
