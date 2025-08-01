@@ -1,0 +1,1 @@
+multiple-youtube-thumbnail-downloader
