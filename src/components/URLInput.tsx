@@ -103,7 +103,7 @@ const URLInput: React.FC<URLInputProps> = ({ onAddUrls }) => {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Bulk Paste (one URL per line) - Supports playlists!
+            Bulk Paste (one URL per line)!
           </label>
           <textarea
             value={inputValue}
@@ -130,7 +130,7 @@ https://youtu.be/VIDEO_ID"
         
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Individual URLs (videos or playlists)
+            Individual | Playlist URLs (videos or playlists)
           </label>
           <div className="space-y-3">
             {urls.map((url, index) => (
