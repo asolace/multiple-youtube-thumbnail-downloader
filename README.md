@@ -5,6 +5,7 @@ A modern, client-side web application that allows users to extract and download 
 ## 🚀 Features
 
 - **Multiple URL Input**: Add YouTube URLs individually or paste multiple URLs at once
+- **Playlist Support**: Extract thumbnails from entire YouTube playlists with a single URL
 - **Bulk Processing**: Process multiple videos simultaneously
 - **Quality Selection**: Choose from 5 different thumbnail qualities (Max Res, High, Medium, Standard, Default)
 - **Batch Downloads**: Download all thumbnails at once or individually
@@ -41,14 +42,19 @@ A modern, client-side web application that allows users to extract and download 
 
 ### Supported URL Formats
 
-The app supports all common YouTube URL formats:
+The app supports all common YouTube URL formats including playlists:
 
+**Video URLs:**
 - `https://www.youtube.com/watch?v=VIDEO_ID`
 - `https://youtu.be/VIDEO_ID`
 - `https://www.youtube.com/embed/VIDEO_ID`
 - `https://www.youtube.com/v/VIDEO_ID`
 - `https://m.youtube.com/watch?v=VIDEO_ID`
 - `https://www.youtube.com/shorts/VIDEO_ID`
+
+**Playlist URLs:**
+- `https://www.youtube.com/playlist?list=PLAYLIST_ID`
+- `https://www.youtube.com/watch?v=VIDEO_ID&list=PLAYLIST_ID`
 
 ### Downloading Thumbnails
 

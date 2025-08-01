@@ -14,6 +14,65 @@ export const extractVideoId = (url: string): string | null => {
   return null;
 };
 
+export const extractPlaylistId = (url: string): string | null => {
+  const patterns = [
+    /[?&]list=([^&\n?#]+)/,
+    /youtube\.com\/playlist\?list=([^&\n?#]+)/
+  ];
+
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match) {
+      return match[1];
+    }
+  }
+  
+  return null;
+};
+
+export const isPlaylistUrl = (url: string): boolean => {
+  return extractPlaylistId(url) !== null;
+};
+
+export const fetchPlaylistVideos = async (playlistId: string): Promise<string[]> => {
+  try {
+    // Use YouTube's RSS feed for playlists (public playlists only)
+    const rssUrl = `https://www.youtube.com/feeds/videos.xml?playlist_id=${playlistId}`;
+    const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`);
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch playlist');
+    }
+    
+    const data = await response.json();
+    const xmlText = data.contents;
+    
+    // Parse XML to extract video IDs
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+    const entries = xmlDoc.querySelectorAll('entry');
+    
+    const videoIds: string[] = [];
+    entries.forEach(entry => {
+      const link = entry.querySelector('link');
+      if (link) {
+        const href = link.getAttribute('href');
+        if (href) {
+          const videoId = extractVideoId(href);
+          if (videoId) {
+            videoIds.push(videoId);
+          }
+        }
+      }
+    });
+    
+    return videoIds;
+  } catch (error) {
+    console.error('Error fetching playlist:', error);
+    throw new Error('Failed to fetch playlist videos');
+  }
+};
+
 export const generateThumbnailUrls = (videoId: string) => ({
   maxres: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
   high: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
