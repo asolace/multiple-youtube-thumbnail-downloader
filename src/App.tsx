@@ -1,25 +1,27 @@
-import React, { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { Youtube, Trash2 } from 'lucide-react';
-import URLInput from './components/URLInput';
-import QualitySelector from './components/QualitySelector';
-import BatchActions from './components/BatchActions';
-import ThumbnailCard from './components/ThumbnailCard';
-import PrivacyPolicy from './components/PrivacyPolicy';
-import { useYouTubeVideos } from './hooks/useYouTubeVideos';
-import { ThumbnailQuality } from './types';
+import React, { useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import { Youtube, Trash2 } from "lucide-react";
+import URLInput from "./components/URLInput";
+import QualitySelector from "./components/QualitySelector";
+import BatchActions from "./components/BatchActions";
+import ThumbnailCard from "./components/ThumbnailCard";
+import PrivacyPolicy from "./components/PrivacyPolicy";
+import { useYouTubeVideos } from "./hooks/useYouTubeVideos";
+import { ThumbnailQuality } from "./types";
 
 const THUMBNAIL_QUALITIES: ThumbnailQuality[] = [
-  { key: 'maxres', label: 'Max Res', description: '1280x720' },
-  { key: 'high', label: 'High', description: '480x360' },
-  { key: 'medium', label: 'Medium', description: '320x180' },
-  { key: 'standard', label: 'Standard', description: '120x90' },
-  { key: 'default', label: 'Default', description: '120x90' }
+  { key: "maxres", label: "Max Res", description: "1280x720" },
+  { key: "high", label: "High", description: "480x360" },
+  { key: "medium", label: "Medium", description: "320x180" },
+  { key: "standard", label: "Standard", description: "120x90" },
+  { key: "default", label: "Default", description: "120x90" },
 ];
 
 const HomePage: React.FC = () => {
   const { videos, addVideos, clearVideos } = useYouTubeVideos();
-  const [selectedQuality, setSelectedQuality] = useState<ThumbnailQuality>(THUMBNAIL_QUALITIES[0]);
+  const [selectedQuality, setSelectedQuality] = useState<ThumbnailQuality>(
+    THUMBNAIL_QUALITIES[0]
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
@@ -31,11 +33,12 @@ const HomePage: React.FC = () => {
               <Youtube className="w-8 h-8 text-white" />
             </div>
             <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              YouTube Thumbnail Downloader
+              Multiple YouTube Thumbnail Downloader
             </h1>
           </div>
           <p className="text-gray-600 text-lg">
-            Extract and download high-quality thumbnails from YouTube videos with ease
+            Extract and download multiple high-quality thumbnails from YouTube
+            videos all at once with ease!
           </p>
         </div>
 
@@ -50,11 +53,8 @@ const HomePage: React.FC = () => {
               selectedQuality={selectedQuality}
               onQualityChange={setSelectedQuality}
             />
-            
-            <BatchActions
-              videos={videos}
-              selectedQuality={selectedQuality}
-            />
+
+            <BatchActions videos={videos} selectedQuality={selectedQuality} />
           </>
         )}
 
@@ -97,15 +97,15 @@ const HomePage: React.FC = () => {
               No videos added yet
             </h3>
             <p className="text-gray-500">
-              Add some YouTube URLs above to get started with downloading thumbnails
+              Add some YouTube URLs above to get started with downloading
+              thumbnails
             </p>
           </div>
         )}
 
         {/* Footer */}
-        <footer className="mt-16 text-center text-gray-500 text-sm">
+        <footer className="text-center text-gray-500 text-sm">
           <div className="space-y-2">
-            <p>Built with React, TypeScript, and Tailwind CSS</p>
             <div className="flex items-center justify-center gap-4">
               <a
                 href="/privacy"

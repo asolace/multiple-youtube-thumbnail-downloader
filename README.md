@@ -29,6 +29,7 @@ A modern, client-side web application that allows users to extract and download 
 ### Adding YouTube URLs
 
 1. **Bulk Paste Method**:
+
    - Copy multiple YouTube URLs (one per line)
    - Paste them into the "Bulk Paste" textarea
    - Click "Fetch Thumbnails"
@@ -41,6 +42,7 @@ A modern, client-side web application that allows users to extract and download 
 ### Supported URL Formats
 
 The app supports all common YouTube URL formats:
+
 - `https://www.youtube.com/watch?v=VIDEO_ID`
 - `https://youtu.be/VIDEO_ID`
 - `https://www.youtube.com/embed/VIDEO_ID`
@@ -56,20 +58,20 @@ The app supports all common YouTube URL formats:
 
 ### Thumbnail Qualities
 
-| Quality | Resolution | Description |
-|---------|------------|-------------|
-| Max Res | 1280x720 | Highest quality available |
-| High | 480x360 | High definition |
-| Medium | 320x180 | Medium quality |
-| Standard | 120x90 | Standard definition |
-| Default | 120x90 | Default thumbnail |
+| Quality  | Resolution | Description               |
+| -------- | ---------- | ------------------------- |
+| Max Res  | 1280x720   | Highest quality available |
+| High     | 480x360    | High definition           |
+| Medium   | 320x180    | Medium quality            |
+| Standard | 120x90     | Standard definition       |
+| Default  | 120x90     | Default thumbnail         |
 
 ## 🔧 Development
 
 ### Prerequisites
 
 - Node.js (v16 or higher)
-- npm or yarn
+- npm
 
 ### Installation
 
@@ -124,7 +126,7 @@ src/
 └── main.tsx           # Application entry point
 ```
 
-## 🌐 Live Demo
+## 🌐 Live
 
 Visit the live application: [https://multipleyoutubethumbnaildownloader.com](https://multipleyoutubethumbnaildownloader.com)
 
